@@ -1,7 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { ChangeEvent, useEffect, useState } from "react";
+
+import eyeOpenIcon from "../../public/EyeOpen.svg";
+import eyeClosedIcon from "../../public/EyeClose.svg";
 
 interface Props {
   labelId: string;
@@ -20,6 +24,7 @@ export default function Input({ labelId, type, onChange, value, children, link, 
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -56,6 +61,10 @@ export default function Input({ labelId, type, onChange, value, children, link, 
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
   return (
     <>
       <div
@@ -84,13 +93,32 @@ export default function Input({ labelId, type, onChange, value, children, link, 
           id={labelId}
           className={`bg-transparent w-full text-sm leading-6 font-normal border-none outline-none focus:ring-0 ${!isValidEmail ? "border-red-500" : ""}`}
           name={labelId}
-          type={type}
+          type={type.toLowerCase() === "password" ? (isPasswordVisible ? "text" : "password") : type}
           onChange={(e) => {
             onChange(e);
           }}
           value={value}
           required={required}
         />
+        {type.toLowerCase() === "password" && (
+          <button
+            type="button"
+            className="absolute right-1.5 top-1/2 transform -translate-y-1/2 cursor-pointer"
+            onClick={togglePasswordVisibility}
+            style={{
+              backgroundColor: isHovered && !isPasswordVisible ? "#3F4657" : "",
+              borderRadius: "50%",
+              width: "25px",
+              height: "25px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginLeft: "20px",
+            }}
+          >
+            {isPasswordVisible ? <Image src={eyeOpenIcon} alt="Open Eye" width={19} height={19} className="eye-icon" /> : <Image src={eyeClosedIcon} alt="Closed Eye" width={19} height={19} className="eye-icon" />}
+          </button>
+        )}
       </div>
       {link && (
         <div className="text-sm">
@@ -106,6 +134,11 @@ export default function Input({ labelId, type, onChange, value, children, link, 
 
         .transform-translate {
           transition: transform 0.3s ease-in-out;
+        }
+
+        .eye-icon {
+          width: 19px;
+          height: 19px;
         }
       `}</style>
     </>
