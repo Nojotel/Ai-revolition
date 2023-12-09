@@ -88,7 +88,7 @@ export default function Input({ labelId, type, onChange, value, children, link, 
           htmlFor={labelId}
           className={`absolute left-1.5 text-sm leading-6 font-normal pointer-events-none transition-transform ${isClicked ? "transform-translate" : ""}`}
           style={{
-            color: (isHovered || isClicked || (document.activeElement?.id === labelId && !isInputFilled)) && !isEyeHovered ? "rgba(246, 246, 246, 0.7)" : "rgba(246, 246, 246, 0.4)",
+            color: (isHovered || isClicked || (typeof document !== "undefined" && document.activeElement?.id === labelId && !isInputFilled)) && !isEyeHovered ? "rgba(246, 246, 246, 0.7)" : "rgba(246, 246, 246, 0.4)",
             fontSize: isClicked || isInputFilled ? "12px" : "inherit",
             transform: isClicked ? "translateY(-20px)" : isInputFilled ? "translateY(-20px)" : "translateY(12px)",
           }}
