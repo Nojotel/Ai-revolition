@@ -105,8 +105,6 @@ export default function Input({ labelId, type, onChange, value, children, link, 
             type="button"
             className="absolute right-1.5 top-1/2 transform -translate-y-1/2 cursor-pointer"
             onClick={togglePasswordVisibility}
-            onMouseEnter={() => setIsHovered(true)} // Move isHovered logic here
-            onMouseLeave={() => setIsHovered(false)} // Move isHovered logic here
             style={{
               backgroundColor: isHovered ? "#3F4657" : "",
               borderRadius: "50%",
