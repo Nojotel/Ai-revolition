@@ -18,13 +18,15 @@ interface Props {
     linkUrl: string;
   };
   required?: boolean;
+  onValidationChange: (isValid: boolean) => void;
 }
 
-export default function Input({ labelId, type, onChange, value, children, link, required = false }: Props) {
+export default function Input({ labelId, type, onChange, value, children, link, required = false, onValidationChange }: Props) {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isEyeHovered, setIsEyeHovered] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -49,6 +51,7 @@ export default function Input({ labelId, type, onChange, value, children, link, 
   const validateEmail = () => {
     if (type.toLowerCase() === "password") {
       setIsValidEmail(true);
+      onValidationChange(true);
       return;
     }
 
@@ -58,6 +61,9 @@ export default function Input({ labelId, type, onChange, value, children, link, 
 
     if (!isValid) {
       setIsClicked(false);
+      onValidationChange(false);
+    } else {
+      onValidationChange(true);
     }
   };
 
@@ -75,14 +81,14 @@ export default function Input({ labelId, type, onChange, value, children, link, 
           setIsClicked(!isClicked);
         }}
         style={{
-          borderColor: isValidEmail ? (isClicked ? "#4A7AFF" : "") : "#F72E25",
+          borderColor: isValidEmail || value.trim() === "" || (isClicked && document.activeElement?.id === labelId) ? "#4A7AFF" : "#F72E25",
         }}
       >
         <label
           htmlFor={labelId}
           className={`absolute left-1.5 text-sm leading-6 font-normal pointer-events-none transition-transform ${isClicked ? "transform-translate" : ""}`}
           style={{
-            color: isHovered || isClicked ? "rgba(246, 246, 246, 0.7)" : "rgba(246, 246, 246, 0.4)",
+            color: (isHovered || isClicked || (document.activeElement?.id === labelId && !isInputFilled)) && !isEyeHovered ? "rgba(246, 246, 246, 0.7)" : "rgba(246, 246, 246, 0.4)",
             fontSize: isClicked || isInputFilled ? "12px" : "inherit",
             transform: isClicked ? "translateY(-20px)" : isInputFilled ? "translateY(-20px)" : "translateY(12px)",
           }}
@@ -105,8 +111,10 @@ export default function Input({ labelId, type, onChange, value, children, link, 
             type="button"
             className="absolute right-1.5 top-1/2 transform -translate-y-1/2 cursor-pointer"
             onClick={togglePasswordVisibility}
+            onMouseEnter={() => setIsEyeHovered(true)}
+            onMouseLeave={() => setIsEyeHovered(false)}
             style={{
-              backgroundColor: isHovered ? "#3F4657" : "",
+              backgroundColor: isEyeHovered ? "#3F4657" : "",
               borderRadius: "50%",
               width: "25px",
               height: "25px",

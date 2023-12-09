@@ -28,6 +28,8 @@ interface Props {
 export default function Form({ config, isLoading, btnText, onChange, onSubmit }: Props) {
   const [emailFilled, setEmailFilled] = useState(false);
   const [passwordFilled, setPasswordFilled] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event);
@@ -39,12 +41,27 @@ export default function Form({ config, isLoading, btnText, onChange, onSubmit }:
     }
   };
 
-  const isButtonActive = emailFilled && passwordFilled;
+  const isButtonActive = emailFilled && passwordFilled && isEmailValid && isPasswordValid;
 
   return (
     <form className="space-y-6" onSubmit={onSubmit}>
       {config.map((input) => (
-        <Input key={input.labelId} labelId={input.labelId} type={input.type} onChange={handleInputChange} value={input.value} link={input.link} required={input.required}>
+        <Input
+          key={input.labelId}
+          labelId={input.labelId}
+          type={input.type}
+          onChange={handleInputChange}
+          value={input.value}
+          link={input.link}
+          required={input.required}
+          onValidationChange={(isValid) => {
+            if (input.type.toLowerCase() === "email") {
+              setIsEmailValid(isValid);
+            } else if (input.type.toLowerCase() === "password") {
+              setIsPasswordValid(isValid);
+            }
+          }}
+        >
           {input.labelText}
         </Input>
       ))}
