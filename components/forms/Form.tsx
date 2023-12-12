@@ -35,7 +35,7 @@ export default function Form({ config, isLoading, btnText, onChange, onSubmit }:
     if (event.target.name === "email") {
       setIsEmailValid(isValidEmail(event.target.value));
     } else if (event.target.name === "password") {
-      setIsPasswordValid(event.target.value.trim() !== "");
+      setIsPasswordValid(event.target.value.length > 6);
     }
   };
 
@@ -44,7 +44,7 @@ export default function Form({ config, isLoading, btnText, onChange, onSubmit }:
     return emailRegex.test(email);
   };
 
-  const isButtonActive = config.every((input) => input.value.trim() !== "" && (input.type.toLowerCase() !== "email" || isValidEmail(input.value)) && (input.type.toLowerCase() !== "password" || input.value.trim() !== ""));
+  const isButtonActive = config.every((input) => input.value.trim() !== "" && (input.type.toLowerCase() !== "email" || isEmailValid) && (input.type.toLowerCase() !== "password" || isPasswordValid));
 
   return (
     <form className="space-y-6" onSubmit={onSubmit}>
