@@ -1,35 +1,28 @@
-'use client'
+"use client";
 
-import { Form } from '@/components/forms'
-import { useResetPasswordConfirm } from '@/hooks'
+import { Form } from "@/components/forms";
+import { useResetPassword } from "@/hooks";
 
-interface Props {
-	uid: string
-	token: string
-}
+export default function PasswordResetForm() {
+  const { email, isLoading, onChange, onSubmit } = useResetPassword();
 
-export default function PasswordResetConfirmForm({ uid, token }: Props) {
-	const { new_password, isLoading, onChange, onSubmit } =
-		useResetPasswordConfirm(uid, token)
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
-	const config = [
-		{
-			labelText: 'Пароль',
-			labelId: 'new_password',
-			type: 'password',
-			onChange,
-			value: new_password,
-			required: true,
-		},
-	]
+  const config = [
+    {
+      labelText: "Адрес электронной почты",
+      labelId: "email",
+      type: "email",
+      onChange,
+      value: email,
+      required: true,
+    },
+  ];
 
-	return (
-		<Form
-			config={config}
-			isLoading={isLoading}
-			btnText='Задать пароль'
-			onChange={onChange}
-			onSubmit={onSubmit}
-		/>
-	)
+  const isButtonActive = email.trim() !== "" && isValidEmail(email) && !isLoading;
+
+  return <Form config={config} isLoading={isLoading} btnText="Сбросить пароль" onChange={onChange} onSubmit={onSubmit} isButtonActive={isButtonActive} />;
 }

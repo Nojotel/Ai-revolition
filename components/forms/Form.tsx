@@ -26,8 +26,6 @@ interface Props {
 }
 
 export default function Form({ config, isLoading, btnText, onChange, onSubmit }: Props) {
-  const [emailFilled, setEmailFilled] = useState(false);
-  const [passwordFilled, setPasswordFilled] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
 
@@ -35,13 +33,18 @@ export default function Form({ config, isLoading, btnText, onChange, onSubmit }:
     onChange(event);
 
     if (event.target.name === "email") {
-      setEmailFilled(event.target.value.trim() !== "");
+      setIsEmailValid(isValidEmail(event.target.value));
     } else if (event.target.name === "password") {
-      setPasswordFilled(event.target.value.trim() !== "");
+      setIsPasswordValid(event.target.value.trim() !== "");
     }
   };
 
-  const isButtonActive = emailFilled && passwordFilled && isEmailValid && isPasswordValid;
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const isButtonActive = config.every((input) => input.value.trim() !== "" && (input.type.toLowerCase() !== "email" || isValidEmail(input.value)) && (input.type.toLowerCase() !== "password" || input.value.trim() !== ""));
 
   return (
     <form className="space-y-6" onSubmit={onSubmit}>
