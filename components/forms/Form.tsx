@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { Spinner } from "@/components/common";
 import { Input } from "@/components/forms";
@@ -22,9 +23,10 @@ interface Props {
   btnText: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  isButtonActive: boolean;
 }
 
-export default function Form({ config, isLoading, btnText, onChange, onSubmit }: Props) {
+export default function Form({ config, isLoading, btnText, onChange, onSubmit, isButtonActive }: Props) {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
 
@@ -42,15 +44,6 @@ export default function Form({ config, isLoading, btnText, onChange, onSubmit }:
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-
-  const isButtonActive = config.every((input) => {
-    if (input.type.toLowerCase() === "email") {
-      return input.value.trim() !== "" && isEmailValid;
-    } else if (input.type.toLowerCase() === "password") {
-      return input.value.trim() !== "" && isPasswordValid;
-    }
-    return true;
-  });
 
   return (
     <form className="space-y-6" onSubmit={onSubmit}>
@@ -76,7 +69,7 @@ export default function Form({ config, isLoading, btnText, onChange, onSubmit }:
       ))}
 
       <div>
-        <button type="submit" className={`flex w-full h-11 justify-center items-center rounded-3xl px-5 py-3.5 text-sm font-semibold leading-6 ${isButtonActive ? "bg-button" : "bg-inactive-button"} text-textlight ${isButtonActive ? "hover:bg-buttonhover" : ""} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-buttonhover`} disabled={isLoading || !isButtonActive}>
+        <button type="submit" className={`flex w-full h-11 justify-center items-center rounded-3xl px-5 py-3.5 text-sm font-semibold leading-6 ${isButtonActive ? "bg-button" : "bg-inactive-button border-inactive-button"} text-textlight ${isButtonActive ? "hover:bg-buttonhover" : ""} focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-buttonhover`} disabled={isLoading || !isButtonActive}>
           {isLoading ? <Spinner sm /> : `${btnText}`}
         </button>
       </div>
