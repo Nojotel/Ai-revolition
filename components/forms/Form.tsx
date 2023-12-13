@@ -23,7 +23,7 @@ interface Props {
   btnText: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
-  isButtonActive: boolean;
+  isButtonActive?: boolean;
 }
 
 export default function Form({ config, isLoading, btnText, onChange, onSubmit }: Props) {
