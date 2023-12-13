@@ -22,10 +22,9 @@ interface Props {
   btnText: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
-  isButtonActive: boolean;
 }
 
-export default function Form({ config, isLoading, btnText, onChange, onSubmit, isButtonActive }: Props) {
+export default function Form({ config, isLoading, btnText, onChange, onSubmit }: Props) {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
 
@@ -43,6 +42,15 @@ export default function Form({ config, isLoading, btnText, onChange, onSubmit, i
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+
+  const isButtonActive = config.every((input) => {
+    if (input.type.toLowerCase() === "email") {
+      return input.value.trim() !== "" && isEmailValid;
+    } else if (input.type.toLowerCase() === "password") {
+      return input.value.trim() !== "" && isPasswordValid;
+    }
+    return true;
+  });
 
   return (
     <form className="space-y-6" onSubmit={onSubmit}>
