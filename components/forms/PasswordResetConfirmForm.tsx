@@ -1,20 +1,19 @@
-import React from "react";
+"use client";
+
 import { Form } from "@/components/forms";
 import { useResetPasswordConfirm } from "@/hooks";
 
-interface PasswordResetConfirmFormProps {
-  uid?: string;
-  token?: string;
+interface Props {
+  uid: string;
+  token: string;
 }
 
-const PasswordResetConfirmForm: React.FC<PasswordResetConfirmFormProps> = ({ uid, token }) => {
-  const { new_password, re_new_password, isLoading, onChange, onSubmit } = useResetPasswordConfirm(uid, token);
-
-  const isButtonActive = new_password.trim() !== "" && re_new_password.trim() !== "" && !isLoading;
+export default function PasswordResetConfirmForm({ uid, token }: Props) {
+  const { new_password, isLoading, onChange, onSubmit } = useResetPasswordConfirm(uid, token);
 
   const config = [
     {
-      labelText: "Новый пароль",
+      labelText: "Пароль",
       labelId: "new_password",
       type: "password",
       onChange,
@@ -23,5 +22,5 @@ const PasswordResetConfirmForm: React.FC<PasswordResetConfirmFormProps> = ({ uid
     },
   ];
 
-  return <Form config={config} isLoading={isLoading} btnText="Сохранить пароль" onChange={onChange} onSubmit={onSubmit} isButtonActive={isButtonActive} />;
-};
+  return <Form config={config} isLoading={isLoading} btnText="Задать пароль" onChange={onChange} onSubmit={onSubmit} />;
+}
