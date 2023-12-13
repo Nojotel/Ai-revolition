@@ -25,5 +25,3 @@ const PasswordResetConfirmForm: React.FC<PasswordResetConfirmFormProps> = ({ uid
 
   return <Form config={config} isLoading={isLoading} btnText="Сохранить пароль" onChange={onChange} onSubmit={onSubmit} isButtonActive={isButtonActive} />;
 };
-
-export default PasswordResetConfirmForm;
