@@ -21,14 +21,6 @@ const PasswordResetConfirmForm: React.FC<PasswordResetConfirmFormProps> = ({ uid
       value: new_password,
       required: true,
     },
-    {
-      labelText: "Повторите новый пароль",
-      labelId: "re_new_password",
-      type: "password",
-      onChange,
-      value: re_new_password,
-      required: true,
-    },
   ];
 
   return <Form config={config} isLoading={isLoading} btnText="Сохранить пароль" onChange={onChange} onSubmit={onSubmit} isButtonActive={isButtonActive} />;
