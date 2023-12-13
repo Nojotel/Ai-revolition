@@ -124,7 +124,7 @@ export default function Input({ labelId, type, onChange, value, children, link, 
               marginLeft: "20px",
             }}
           >
-            {isPasswordVisible ? <Image src={eyeOpenIcon} alt="Open Eye" width={19} height={19} className="eye-icon" /> : <Image src={eyeClosedIcon} alt="Closed Eye" width={19} height={19} className="eye-icon" />}
+            {isPasswordVisible ? <Image src={eyeOpenIcon} alt="Open Eye" width={25} height={25} className="eye-icon" /> : <Image src={eyeClosedIcon} alt="Closed Eye" width={25} height={25} className="eye-icon" />}
           </button>
         )}
       </div>
@@ -145,8 +145,8 @@ export default function Input({ labelId, type, onChange, value, children, link, 
         }
 
         .eye-icon {
-          width: 19px;
-          height: 19px;
+          width: 25px;
+          height: 25px;
         }
       `}</style>
     </>
