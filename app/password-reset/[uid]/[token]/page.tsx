@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 
 interface Props {
   params: {
-    uid: string;
-    token: string;
+    uid?: string;
+    token?: string;
   };
 }
 
