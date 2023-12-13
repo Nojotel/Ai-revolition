@@ -23,6 +23,7 @@ interface Props {
   btnText: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  isButtonActive: boolean;
 }
 
 export default function Form({ config, isLoading, btnText, onChange, onSubmit }: Props) {
@@ -40,11 +41,8 @@ export default function Form({ config, isLoading, btnText, onChange, onSubmit }:
       const passwordValue = event.target.value;
       setIsPasswordValid(passwordValue.length > 6);
     }
-
-    // Calculate isButtonActive based on the updated states
     const updatedIsButtonActive = config.every((input) => input.value.trim() !== "" && (input.type.toLowerCase() !== "email" || isEmailValid) && (input.type.toLowerCase() !== "password" || isPasswordValid));
 
-    // Update isButtonActive state
     setIsButtonActive(updatedIsButtonActive);
   };
 
