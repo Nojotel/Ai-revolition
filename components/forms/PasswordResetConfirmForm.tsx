@@ -1,28 +1,37 @@
-"use client";
-
+import React from "react";
 import { Form } from "@/components/forms";
-import { useResetPassword } from "@/hooks";
+import { useResetPasswordConfirm } from "@/hooks";
 
-export default function PasswordResetForm() {
-  const { email, isLoading, onChange, onSubmit } = useResetPassword();
+interface PasswordResetConfirmFormProps {
+  uid?: string;
+  token?: string;
+}
 
-  const isValidEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+const PasswordResetConfirmForm: React.FC<PasswordResetConfirmFormProps> = ({ uid, token }) => {
+  const { new_password, re_new_password, isLoading, onChange, onSubmit } = useResetPasswordConfirm(uid, token);
+
+  const isButtonActive = new_password.trim() !== "" && re_new_password.trim() !== "" && !isLoading;
 
   const config = [
     {
-      labelText: "Адрес электронной почты",
-      labelId: "email",
-      type: "email",
+      labelText: "Новый пароль",
+      labelId: "new_password",
+      type: "password",
       onChange,
-      value: email,
+      value: new_password,
+      required: true,
+    },
+    {
+      labelText: "Повторите новый пароль",
+      labelId: "re_new_password",
+      type: "password",
+      onChange,
+      value: re_new_password,
       required: true,
     },
   ];
 
-  const isButtonActive = email.trim() !== "" && isValidEmail(email) && !isLoading;
+  return <Form config={config} isLoading={isLoading} btnText="Сохранить пароль" onChange={onChange} onSubmit={onSubmit} isButtonActive={isButtonActive} />;
+};
 
-  return <Form config={config} isLoading={isLoading} btnText="Сбросить пароль" onChange={onChange} onSubmit={onSubmit} isButtonActive={isButtonActive} />;
-}
+export default PasswordResetConfirmForm;
