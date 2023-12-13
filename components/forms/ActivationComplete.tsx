@@ -31,5 +31,7 @@ export default function ActivationCompleteForm() {
     },
   ];
 
+  const isButtonActive = email.trim() !== "" && !isLoading;
+
   return <Form config={config} isLoading={isLoading} btnText="Отправить повторно" onChange={onChange} onSubmit={onSubmit} isButtonActive={isButtonActive} />;
 }
