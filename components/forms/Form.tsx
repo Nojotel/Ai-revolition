@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import { Spinner } from "@/components/common";
 import { Input } from "@/components/forms";
@@ -23,9 +22,10 @@ interface Props {
   btnText: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  isButtonActive: boolean;
 }
 
-export default function Form({ config, isLoading, btnText, onChange, onSubmit }: Props) {
+export default function Form({ config, isLoading, btnText, onChange, onSubmit, isButtonActive }: Props) {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
 
@@ -43,8 +43,6 @@ export default function Form({ config, isLoading, btnText, onChange, onSubmit }:
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-
-  const isButtonActive = config.every((input) => input.value.trim() !== "" && (input.type.toLowerCase() !== "email" || isEmailValid) && (input.type.toLowerCase() !== "password" || isPasswordValid));
 
   return (
     <form className="space-y-6" onSubmit={onSubmit}>
