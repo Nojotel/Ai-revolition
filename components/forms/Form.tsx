@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Spinner } from "@/components/common";
 import { Input } from "@/components/forms";
 import { ChangeEvent, FormEvent } from "react";
@@ -30,6 +30,23 @@ export default function Form({ config, isLoading, btnText, onChange, onSubmit }:
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [isButtonActive, setIsButtonActive] = useState(false);
+
+  useEffect(() => {
+    const initialIsButtonActive = config.every((input) => input.value.trim() !== "" && (input.type.toLowerCase() !== "email" || isEmailValid) && (input.type.toLowerCase() !== "password" || isPasswordValid));
+    setIsButtonActive(initialIsButtonActive);
+  }, [config, isEmailValid, isPasswordValid]);
+
+  useEffect(() => {
+    config.forEach((input) => {
+      if (input.type.toLowerCase() === "email") {
+        const emailValue = input.value.trim();
+        setIsEmailValid(isValidEmail(emailValue));
+      } else if (input.type.toLowerCase() === "password") {
+        const passwordValue = input.value;
+        setIsPasswordValid(passwordValue.length > 6);
+      }
+    });
+  }, [config]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event);
