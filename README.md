@@ -1,25 +1,35 @@
-# (AI revolution project) Платформа для работы с Chat GPT
+# AI Revolution Project: Платформа для работы с Chat GPT
 
 Разработать веб-сервис, который объединит функциональность ChatGPT и будет специализирован для помощи в решении креативных задач. Данный сервис будет полезен для агентств, пиарщиков, контент-мейкеров, маркетологов и т.д.
 
-<h2 align="center">
-<p align="center">
-<img src="https://img.shields.io/badge/Next JS-14-purple">
-<img src="https://img.shields.io/badge/Typescript-5-blue">
-<img src="https://img.shields.io/badge/Redux-1.9.7-red">
-<img src="https://img.shields.io/badge/TailwindCSS-3.3-green">
-</p>
-</h2>
+## Технологии и инструменты
 
-### Установка
+- **Frontend:** Next.js, Typescript, Redux, TailwindCSS.
+- **База данных:** MongoDB.
+- **Аутентификация и безопасность:** JWT, bcrypt.
+- **Система контроля версий:** GitHub.
 
-Создать .env.local, внести данные<br />
-NEXT_PUBLIC_HOST=<br />
-NEXT_PUBLIC_REDIRECT_URL=<br />
+## Установка и запуск
 
-### Запуск
+Создайте файл `.env.local` и внесите следующие данные:
+```plaintext
+NEXT_PUBLIC_HOST=
+NEXT_PUBLIC_REDIRECT_URL=
+```
 
+Установите зависимости:
 ```bash
 npm install
+```
+
+Запустите проект:
+```bash
 npm run dev
 ```
+
+Откройте [http://localhost:3000](http://localhost:3000) в браузере, чтобы увидеть результат.
+
+## Ссылки
+
+- [Сайт AI Revolution](https://creacraft.vercel.app/auth/login)
+
